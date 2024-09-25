@@ -1,0 +1,47 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+public class BrowserTabsExample {
+    public static void main(String[] args) {
+        // Set the path for the WebDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // Initialize the WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Navigate to Amazon India
+            driver.get("https://www.amazon.in/");
+            System.out.println("Title of the original tab: " + driver.getTitle());
+
+            // Open a new tab by executing JavaScript
+            ((JavascriptExecutor) driver).executeScript("window.open('https://www.amazon.in/gp/help/customer/display.html', '_blank');");
+
+            // Get all window handles
+            Set<String> windowHandles = driver.getWindowHandles();
+            List<String> tabs = new ArrayList<>(windowHandles);
+
+            // Switch to the new tab (second tab)
+            driver.switchTo().window(tabs.get(1));
+            System.out.println("Title of the new tab: " + driver.getTitle());
+
+            // Perform any actions on the new tab (optional)
+            // For example, you could click on a link or fill out a form here.
+
+            // Switch back to the original tab
+            driver.switchTo().window(tabs.get(0));
+            System.out.println("Switched back to the original tab: " + driver.getTitle());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the browser
+            driver.quit();
+        }
+    }
+}

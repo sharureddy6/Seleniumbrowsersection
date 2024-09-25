@@ -1,0 +1,44 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class AmazonDropdownExample {
+    public static void main(String[] args) {
+        // Set the path for the WebDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // Initialize the WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Navigate to Amazon India
+            driver.get("https://www.amazon.in/");
+
+            // Locate the department dropdown element (the "All" dropdown)
+            WebElement dropdownElement = driver.findElement(By.id("searchDropdownBox"));
+
+            // Create a Select object
+            Select dropdown = new Select(dropdownElement);
+
+            // Select an option by visible text
+            dropdown.selectByVisibleText("Books");
+
+            // Alternatively, you can select by value or index if needed
+            // dropdown.selectByValue("search-alias=stripbooks-intl-ship");
+            // dropdown.selectByIndex(1); // Assuming 'Books' is the second option
+
+            // Print all available options
+            for (WebElement option : dropdown.getOptions()) {
+                System.out.println(option.getText());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the browser
+            driver.quit();
+        }
+    }
+}
